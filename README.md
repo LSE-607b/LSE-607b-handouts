@@ -2,7 +2,7 @@
 
 ## Speaking order 🤭
 
-* We will meet once a week, and the speaking order will be: Pietro, Shakeel, Xuzhi, Zetai, Di.
+* We will meet once a week, and the speaking order will be: [Pietro, Shakeel, Xuzhi, Zetai, Di, Pouya]. 
 * Every week two people will present, and we cycle through the speaking order using overleaping blocks, so the first few talks will be given by: (Pietro, Shakeel), (Shakeel, Xuzhi), (Xuzhi, Zetai), etc.
 * Certain topics will take more than a week to go through. In this case the second person from the present tuple should let the second person from the next tuple know in advance. 
 
