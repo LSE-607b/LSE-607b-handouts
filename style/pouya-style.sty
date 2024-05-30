@@ -1,0 +1,141 @@
+% mystyle.sty
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{mystyle}[2024/05/30 Custom style file for document formatting]
+
+%----------------------------------------------------------------------------------------
+% PACKAGES
+%----------------------------------------------------------------------------------------
+\RequirePackage{amsfonts}
+\RequirePackage{enumitem}
+\RequirePackage{mathtools}
+\RequirePackage{pgffor}
+\RequirePackage{dashrule}
+\RequirePackage{xcolor}
+\RequirePackage{cancel}
+\RequirePackage{amsthm}
+\RequirePackage{amsmath}
+\RequirePackage{mdframed}
+\RequirePackage[english]{babel}
+\RequirePackage{graphicx}
+\RequirePackage{fancyhdr}
+
+%----------------------------------------------------------------------------------------
+% COLORS
+%----------------------------------------------------------------------------------------
+\definecolor{defcolor}{rgb}{1,0.8,0.6} % Desert
+\definecolor{defframe}{rgb}{1,0.5,0.3} % Dark desert
+\definecolor{thmcolor}{rgb}{0.8,0.8,1} % Light purple
+\definecolor{thmframe}{rgb}{0.4,0.4,0.6} % Dark purple
+\definecolor{excolor}{rgb}{0.8,1,0.8} % Light green
+\definecolor{exframe}{rgb}{0,0.8,0} % Dark green
+\definecolor{probcolor}{rgb}{1,1,0.7} % Yellow
+\definecolor{probframe}{rgb}{0.8,0.8,0.5} % Dark yellow
+
+%----------------------------------------------------------------------------------------
+% THEOREM STYLES
+%----------------------------------------------------------------------------------------
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{problem}{Problem}[section]
+\newtheorem{remark}{Remark}[section]
+
+%----------------------------------------------------------------------------------------
+% MDFRAMED STYLES
+%----------------------------------------------------------------------------------------
+\surroundwithmdframed[
+    backgroundcolor=defcolor,
+    linecolor=defframe,
+    linewidth=1.2pt
+]{definition}
+
+\surroundwithmdframed[
+    backgroundcolor=thmcolor,
+    linecolor=thmframe,
+    linewidth=1.2pt
+]{theorem}
+
+\surroundwithmdframed[
+    backgroundcolor=thmcolor,
+    linecolor=thmframe,
+    linewidth=1.2pt
+]{lemma}
+
+\surroundwithmdframed[
+    backgroundcolor=thmcolor,
+    linecolor=thmframe,
+    linewidth=1.2pt
+]{corollary}
+
+\surroundwithmdframed[
+    backgroundcolor=excolor,
+    linecolor=exframe,
+    linewidth=1.2pt
+]{example}
+
+\surroundwithmdframed[
+    backgroundcolor=probcolor,
+    linecolor=probframe,
+    linewidth=1.2pt
+]{problem}
+
+%----------------------------------------------------------------------------------------
+% PAGE FORMATTING
+%----------------------------------------------------------------------------------------
+\addtolength{\hoffset}{-2.25cm}
+\addtolength{\textwidth}{4.5cm}
+\addtolength{\voffset}{-3.25cm}
+\addtolength{\textheight}{5cm}
+\setlength{\parskip}{0pt}
+\setlength{\parindent}{0in}
+
+%----------------------------------------------------------------------------------------
+% FANCYHDR SETTINGS
+%----------------------------------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhead{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[L]{ST452/ST552 -- London School of Economics and Political Sciences}
+\fancyfoot[C]{}
+\fancyfoot[R]{\thepage}
+
+%----------------------------------------------------------------------------------------
+% NEW COMMANDS
+%----------------------------------------------------------------------------------------
+\newcommand{\note}[1]{\marginpar{\scriptsize \textcolor{red}{#1}}} % Enables comments in red on margin
+\newcommand{\indep}{\perp \!\!\! \perp}
+\newcommand{\lecture}{1}
+
+\newcommand{\myheadersection}[1]{%
+  \title{#1} % Article title
+  \fancyhead[C]{}
+  \hrule \medskip % Upper rule
+  \begin{minipage}{0.3\textwidth} % Left side of title section
+    \raggedright
+    Teacher responsible:\\
+    Prof. Angelos Dassios,\\ Prof. Konstantinos Kardaras,\\ and Dr. Giulia Livieri.
+  \end{minipage}
+  \begin{minipage}{0.4\textwidth} % Center of title section
+    \centering 
+    \Large % Title text size
+    Probability and Mathematical Statistics I\\
+    ST452/ST552\\% Assignment title and number
+    \normalsize % Subtitle text size
+    London School of Economics and Political Sciences\\ % Assignment subtitle
+  \end{minipage}
+  \begin{minipage}{0.3\textwidth} % Right side of title section
+    \raggedleft
+    Author of the first draft:\\
+    Pouya Roudaki, 202335637, s.mirrezaeiroudaki@lse.ac.uk.\\ % \\ % Date % Email text size
+    \hfill\\
+  \end{minipage}
+  \medskip\hrule % Lower rule
+  \bigskip
+}
+
+\endinput

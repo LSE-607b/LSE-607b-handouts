@@ -1,65 +1,119 @@
 \documentclass{article}
-\usepackage[scaled]{berasans}
-\renewcommand*\familydefault{\sfdefault}  %% Only if the base font of the document is to be sans serif
-\usepackage[T1]{fontenc}
-\usepackage{xcolor}
-\usepackage{epstopdf}% To incorporate .eps illustrations using PDFLaTeX, etc.
-\usepackage[caption=false]{subfig}% Support for small, `sub' figures and tables
-%\usepackage[nolists,tablesfirst]{endfloat}% To `separate' figures and tables from text if required
 
-%\usepackage[doublespacing]{setspace}% To produce a `double spaced' document if required
-%\setlength\parindent{24pt}% To increase paragraph indentation when line spacing is doubled
-%\setlength\bibindent{2em}% To increase hanging indent in bibliography when line spacing is doubled
+%%% core packages %%% 
 
-\usepackage{mathrsfs}
+\RequirePackage{amsthm,amsmath,amsfonts,amssymb}
+\RequirePackage{natbib}
+\RequirePackage{hyperref}
+\RequirePackage{booktabs, array}
+\RequirePackage{lipsum}
+\RequirePackage{graphicx}
+\RequirePackage{xcolor}
+\RequirePackage{subcaption}
+\RequirePackage{multirow}
+\RequirePackage{float}
+\RequirePackage{mdframed}
 
-\usepackage[numbers,sort&compress]{natbib}% Citation support using natbib.sty
-\bibpunct[, ]{[}{]}{,}{n}{,}{,}% Citation support using natbib.sty
-\renewcommand\bibfont{\fontsize{10}{12}\selectfont}% Bibliography support using natbib.sty
+%%% Referencing %%%
 
-\theoremstyle{plain}% Theorem-like structures provided by amsthm.sty
+\bibliographystyle{agsm}
+
+%%% page setup %%%
+
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{setspace}
+\RequirePackage[a4paper,
+    left=1.3in,
+    right=1in]{geometry}
+    
+\renewcommand{\baselinestretch}{1.4}
+
+
+\providecommand{\keywords}[1]{\textbf{Keywords:} #1}
+
+
+%%% custom maths %%%
+
+\RequirePackage{stackengine}
+
+\newcommand\cleq{\mathrel{\stackunder{$<$}{$\sim$}}}
+\newcommand\cgeq{\mathrel{\stackunder{$>$}{$\sim$}}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\newcommand{\indep}{\perp \!\!\! \perp}
+
+
+%%% theorems, lemmas, etc %%%
+
+\definecolor{defcolor}{rgb}{1,0.8,0.6} % Desert
+\definecolor{defframe}{rgb}{1,0.5,0.3} % Dark desert
+\definecolor{thmcolor}{rgb}{0.8,0.8,1} % Light purple
+\definecolor{thmframe}{rgb}{0.4,0.4,0.6} % dark purple
+
+\newtheorem{definition}{Definition}[section]
+\newtheorem{assumption}{Assumption}[section]
+\newtheorem{claim}{Claim}[section]
+\newtheorem{remark}{Remark}[section]
+\newtheorem{proposition}{Proposition}[section]
+
+\newtheorem{example}{Example}[section]
+\surroundwithmdframed[
+    backgroundcolor=thmcolor,
+    linecolor=thmframe,
+    linewidth=1.2pt
+]{example}
+
 \newtheorem{theorem}{Theorem}[section]
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{corollary}[theorem]{Corollary}
-\newtheorem{proposition}[theorem]{Proposition}
+\surroundwithmdframed[
+    backgroundcolor=thmcolor,
+    linecolor=defframe,
+    linewidth=1.2pt
+]{theorem}
 
-\theoremstyle{definition}
-\newtheorem{definition}[theorem]{Definition}
-\newtheorem{example}[theorem]{Example}
-\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{lemma}{Lemma}[section]
+\surroundwithmdframed[
+    backgroundcolor=thmcolor,
+    linecolor=defframe,
+    linewidth=1.2pt
+]{lemma}
 
-\theoremstyle{remark}
-\newtheorem{remark}{Remark}
-\newtheorem{notation}{Notation}
+\newtheorem{corollary}{Corollary}[section]
+\surroundwithmdframed[
+    backgroundcolor=thmcolor,
+    linecolor=defframe,
+    linewidth=1.2pt
+]{corollary}
 
+\title{Chapter 1: \emph{tails of the normal distribution}}
+
+\author{Pietro Maria Sparago and Shakeel Gavioli-Akilagun}
+
+\date{\small Last updated: May 29 2024}
 
 \begin{document}
-	
-	
-\title{Useful Inequalities in Probability and Statistics}
-
-\author{
-	\name{Pietro Maria Sparago\textsuperscript{a}\thanks{CONTACT P.~M. Author. Email: p.sparago@lse.ac.uk}}
-	\affil{\textsuperscript{a}Department of Statistics, London School of Economics and Political Science, London, UK}
-}
 
 \maketitle
+
+\section{Introduction}
 
 \section{Tails of the normal distribution}
 
 \begin{theorem}  
 \label{th1}	
 Let $X \sim \mathcal{N}(0,1)$. Define $\overline{\Phi}(x):=P(X>x),x\geq 0$. Then
-$$\boxed{\frac{1}{2}e^{-x\sqrt{2/\pi}-x^2/2}\leq \overline{\Phi}(x)\leq \min\bigg(\frac{1}{2}e^{-x^2/2},\frac{1}{x}\phi(x)\bigg),\,x\geq 0}$$
+\begin{equation}
+\frac{1}{2}e^{-x\sqrt{2/\pi}-x^2/2}\leq \overline{\Phi}(x)\leq \min\bigg(\frac{1}{2}e^{-x^2/2},\frac{1}{x}\phi(x)\bigg),\,x\geq 0
+\end{equation}
 \end{theorem}
 \begin{proof} We have, by continuity and Corollary \ref{corol_th1}:
-$$2\overline{\Phi}(x)=\lim_{y\downarrow 0}\frac{\overline{\Phi}(x+y)}{\overline{\Phi}(y)}
+\begin{equation}
+2\bar{\Phi}(x)=\lim_{y\downarrow 0}\frac{\overline{\Phi}(x+y)}{\overline{\Phi}(y)}
 \begin{cases}
 \leq \lim_{y\downarrow 0}e^{-xy-x^2/2}=e^{-x^2/2}\\
 \geq \lim_{y\downarrow 0}e^{-\rho(y)x-x^2/2}=e^{-x\sqrt{2/\pi}-x^2/2}
 \end{cases}
-$$
-We conclude for the upper bound with Lemma \ref{lemma1_th1}.
+\end{equation}
+We conclude for the upper bound with Lemma \ref{lemma: gauss tail bound}.
 \end{proof}
 
 \begin{remark} Note that Proposition \ref{th1} yields a stronger version of the infimum Chernoff bound which is found with
@@ -70,12 +124,12 @@ where the second equality follows from the quadratic minimization condition $\fr
 
 \subsection{Lemmas for the proof of Theorem \ref{th1} - mostly from \cite{pollard2002user}; Appendix D}
 
-\begin{lemma} 
-\label{lemma1_th1}	
+\begin{lemma} 	
 Let $\phi(x):=(2\pi)^{-1/2}e^{-x^2/2}$. Then:
 \begin{equation}
 \bigg(\frac{1}{x}-\frac{1}{x^3}\bigg)\phi(x)<\overline{\Phi}(x)<\frac{1}{x}\phi(x),\,x>0
 \end{equation}
+\label{lemma: gauss tail bound}
 \end{lemma}
 \begin{proof} We have $\overline{\Phi}(x)=\int_x^\infty \phi(t)dt$. Note that for all $t>0$ the functions $1-3/t^4<1$ and $1+1/t^2>1$ so $(1-3/t^4)\phi(t)<\phi(t)<(1+1/t^2)\phi(t)$. We thus integrate from $x>0$ to infinity and obtain the claimed bounds.
 \end{proof}
@@ -144,68 +198,151 @@ $$\begin{aligned}\frac{\overline{\Phi}(x+\delta)}{\overline{\Phi}(x)}&=\frac{\ov
 and we conclude.
 \end{proof}
 
+\section{Laws of Iterated Logarithm}
 
-\subsection{Law of iterated logarithm - mostly from \cite{pollard2002user}, Chapters 11.1 and 11.2}
+\subsection{Motivation}
 
-\begin{lemma} 
-\label{gaussian_maximal_inequality}	
-Let $S_n=X_1+...+X_n$ for $(X_n)_{n\leq N}$ IID $\sim \mathcal{N}(0,1)$. Then for $x\geq 0$
-$${P(\max_{n\leq N}S_n\geq x)\leq  2P(S_N\geq x)}$$
-\end{lemma}
-\begin{proof} We have $P(S_N-S_n\geq 0)=1/2$ for any $n<N$ by the fact that $S_N-S_n\sim \mathcal{N}(0,N-n)$. Define $\tau=\inf\{n\leq N:S_n\geq x\}\wedge N$. The events $\{\tau=n\},n \in \{1,...,N\}$ are disjoint. So we have
-$$\begin{aligned}P(\max_{n\leq N}S_n\geq x)&=P(\cup_{n\leq N}\{\tau=n\})\\
-&= P(\cup_{n\leq N}(\{\tau=n\}\cap\{S_n\geq x\}))\\
-&=\sum_{n\leq N}P(\{\tau=n\}\cap\{S_n\geq x\})\\
-&=2\sum_{n< N}P(\{\tau=n\}\cap\{S_n\geq x\})P(S_N-S_n\geq 0)\\
-&+P(\{\tau=N\}\cap\{S_N\geq x\})\\
-&\stackrel{(*)}{=}2\sum_{n< N}P(\{\tau=n\}\cap\{S_n\geq x\}\cap\{S_N-S_n\geq 0\})\\
-&+P(\{\tau=N\}\cap\{S_N\geq x\})\\
-&\stackrel{(**)}{\leq} 2\sum_{n\leq N}P(\{\tau=n\}\cap\{S_N\geq x\})\\
-&=2P(S_N\geq x)
-\end{aligned}$$
-where equality $(*)$ follows from the fact that $S_N-S_n$ is independent of $S_n$, while the inequality $(**)$ follows from the fact that $\{S_n\geq x\}\cap\{S_N-S_n\geq 0\}\subseteq \{S_N\geq x\}$ and $P(\{\tau=N\}\cap\{S_N\geq x\})\leq 2P(\{\tau=N\}\cap\{S_N\geq x\})$.
-\end{proof}
+Let $X_1, X_2, \dots$ be a sequence of independently and identically distributed random variables with mean zero and variance one, and let $S_n = X_1 + \dots + X_n$ for $n \geq 1$ and $S_0 = 0$ be the associated partial sum process. The strong law of large numbers states that scaled by $n^{-1}$ the partial sum process converges almost surely to the mean of the $X$'s, in this case zero: 
+\begin{equation}
+	n^{-1} S_n \xrightarrow{a.s.} 0 \text{ as } n \rightarrow \infty. 
+	\label{equation: strong LLN}
+\end{equation}
+Whereas the central limit theorem states that scaled by $n^{-1/2}$ the partial sum process converges in distribution to a standard Gaussian: 
+\begin{equation}
+	n^{-1/2} S_n \xrightarrow{d} \mathcal{N} \left ( 0, 1 \right ) \text{ as } n \rightarrow \infty. 
+	\label{equation: CLT}
+\end{equation}
+It is often of interest to quantify the fluctuations of $S_n$. The law of iterated logarithm provides such a result, and states that almost surely the fluctuations will be no larger than $\sqrt{2 n \log \log (n)}$. Comparing to the scaling factors in (\ref{equation: strong LLN}) and (\ref{equation: CLT}) the law of iterated logarithm can be understood as operating \emph{between} the central limit theorem and the law of large numbers. 
+
+\subsection{A law of iterated logarithm for the Wiener process}
+
+We present a law of iterated logarithm for the Wiener process. In section \ref{section: laws of iterated logarithm for discrete random walks} this result will be used as a building block for proving laws of iterated logarithms for more general random walks. 
 
 \begin{theorem}
-	\label{lil_gauss}
-	Let $S_n=X_1+...+X_n$ where $(X_n)_{n \in \mathbb{N}}$ are IID $\sim \mathcal{N}(0,1)$. Then:
-	\begin{enumerate}
-		\item $\limsup_{n\to \infty}\frac{S_n}{\sqrt{2n \ln \ln n}}=1$ a.s.;
-		\item $\liminf_{n\to \infty}\frac{S_n}{\sqrt{2n \ln \ln n}}=-1$ a.s.;
-		\item $\frac{S_n}{\sqrt{2n \ln \ln n}}\in B$ i.o. a.s. for any open $B\subseteq [-1,1]$.
-	\end{enumerate}	
+Let $\left (B_t \right )_{t \geq 0}$ be a Wiener process, then $\limsup\limits_{n \rightarrow \infty} B_n / \sqrt{2 n \log \log (n)} = 1 $, $\mathbb{P}$-almost surely. 
+\label{theorem: BM LIL}
 \end{theorem}
-\begin{proof} (i). Let $B$ be a block of consecutive positive integers (i.e. $B=\{n+1,...,n+k\}$ for some $n,k$). Let $\gamma >1$. Then by Lemma \ref{gaussian_maximal_inequality} and Theorem \ref{lemma1_th1}
-$$\begin{aligned}
-P(\cup_{\ell \in B}\{S_\ell\geq \gamma \sqrt{2\ell \ln \ln \ell}\})&\leq P(\max_{\ell \in B}S_\ell\geq \gamma \sqrt{2n \ln \ln n})\\
-&\leq 2P(S_{n+k}\geq \gamma \sqrt{2n \ln \ln n})\\
-&=2P\bigg(\frac{S_{n+k}}{\sqrt{n+k}}\geq \gamma\frac{\sqrt{2n \ln \ln n}}{\sqrt{n+k}}\bigg)\\
-&=2\overline{\Phi}\bigg(\gamma\frac{\sqrt{2n \ln \ln n}}{\sqrt{n+k}}\bigg)\\
-&\leq \exp\bigg(-\frac{1}{2}\gamma^2\frac{{2n \ln \ln n}}{n+k}\bigg)
-\end{aligned}$$
-Now consider a sequence of consecutive blocks $B_k=\{n:n_k<n\leq n_{k+1}\}$ so that $n_k/\rho^k\to 1$ for some constant $\rho\in (1,\gamma)$. By the above then we then have the bounds
-$$\begin{aligned}P(\cup_{\ell \in B_k}\{S_\ell\geq \gamma \sqrt{2\ell \ln \ln \ell}\})&\leq \exp\bigg(-\frac{1}{2}\rho^2\frac{{2n_k \ln \ln n_k}}{n_{k+1}}\bigg)\\
-&\color{red}{\stackrel{k\textrm{ large enough}}{\approx}}\color{black}{
-\exp\bigg(-\frac{1}{2}\rho^2\frac{{2\rho^k \ln \ln \rho^k}}{\rho^{k+1}}\bigg)}\\
-&=\exp\bigg(-\rho (\ln k + \ln \ln \rho)\bigg)\\
-&=C(\rho)k^{-\rho}
-\end{aligned}$$
-which implies, by Borel-Cantelli I, that $P(S_n\geq \gamma \sqrt{2n \ln \ln n} \textrm{ i.o.})=0$. Therefore $P(\limsup_{n \to \infty}\frac{S_n}{\sqrt{2n \ln \ln n}}\leq \gamma )=1$ for any $\gamma>1$. We conclude that, considering a sequence $\gamma_\ell\downarrow 1$,
-$$P\bigg(\limsup_{n \to \infty}\frac{S_n}{\sqrt{2n \ln \ln n}}\leq 1 \bigg)=1$$
-We now need to prove that $\limsup_{n \to \infty}\frac{S_n}{\sqrt{2n \ln \ln n}}\geq 1$
-	
+We present the proof of Theorem \ref{theorem: BM LIL} which can be found in section 8.5 of \cite{durrett2019probability}. The proof relies on the the reflection principle for Wiener processes, which is stated below. 
+\begin{lemma}
+Let $\left (B_t \right )_{t \geq 0}$ be a Wiener process, putting $T_a = \inf \left \{ t > 0 \mid B_t = a \right \}$ with $a > 0$ it holds that $\mathbb{P} \left ( T_a < t \right ) = 2 \mathbb{P} \left ( B_t \geq a \right )$. 
+\end{lemma}
+\begin{proof}
+If $B$ hits $a$ at some time $s < t$ then $B_t - B_{T_a}$ will be independent of $B_{T_a^-}$. The symmetry of the normal distribution along with the fact that $\mathbb{P}_a \left ( B_u = a \right ) = 0 $ for $u > 0$ then imply that
+\begin{equation}
+\mathbb{P} \left ( T_a < t, B_t > a \right ) = \frac{1}{2} \mathbb{P} \left ( T_a < t \right ). 
+\label{equation: hitting prob}
+\end{equation}
+\label{lemma: reflection principle}
+\end{proof} 
+
+Above we have written $\mathbb{P}_x$ for the probability conditioned on the fact that the Wiener process starts from $x$. Strictly speaking (\ref{equation: hitting prob}) needs to be proved formally, and a proof can be found on page 323 of \cite{durrett2019probability}. Using the fact that $\left \{ B_t > a \right \} \subset \left \{ T_a < t \right \} $ and rearranging (\ref{equation: hitting prob}) gives the desired result. With this result in place we are now able to prove Theorem \ref{theorem: BM LIL}.
+
+\begin{proof}
+Using Lemma \ref{lemma: reflection principle} we have that
+\begin{equation}
+\mathbb{P} \left ( \sup_{s \in [0,1]} B_s > x \right ) = \mathbb{P} \left ( T_x \leq 1 \right ) = 2 \bar{\Phi} \left ( x \right ) 
+\end{equation}
+Lemma \ref{lemma: gauss tail bound} implies that $\bar{\Phi} (x) \sim \frac{1}{\sqrt{2 \pi}} x^{-1} e^{-x^2/2}$ as $x \rightarrow \infty$, therefore combing this with the scaling property of Wiener processes we have that for any increasing function $f$
+\begin{equation}
+\mathbb{P} \left ( B_n > \left ( n f(n) \right ) ^ {1/2} \right ) \sim \frac{1}{\sqrt{2\pi}} f(n)^{-1/2} \exp \left ( - f(n) / 2 \right ). 
+\label{equation: f(n) prob}
+\end{equation}
+Using (\ref{equation: f(n) prob}) we therefore have for any $\varepsilon > 0$ that 
+\begin{equation}
+\sum_{n = 1}^{\infty} \mathbb{P} \left ( B_n > \left ( n f(n) \right ) ^ {1/2} \right ) \left\{\begin{matrix}
+< \infty & \text{ when } f(n) = (2 + \varepsilon ) \log (n) \\
+= \infty & \text{ when } f(n) = (2 - \varepsilon ) \log (n)\\
+\end{matrix}\right. .
+\end{equation}
+Hence, the Borel-Cantelli lemma gives that $\mathbb{P}$-almost surely $\limsup\limits{n \rightarrow \infty} B_{n} / \sqrt{2n \log (n)} \leq 1$. To replace the $\log (n)$ term with $\log \log (n)$ we need to look at an exponentially growing sequence. Let $t_n = \alpha^n$ for some $\alpha > 1$. Then
+\begin{align}
+\mathbb{P} \left ( \sup_{s \in [t_n, t_{n+1}]} B_s > \left ( t_n f (t_n) \right ) ^ {1/2} \right ) & \leq \mathbb{P} \left ( \sup_{s \in [t_n, t_{n+1}]} B_s / \sqrt{t_{n+1}} > \left ( \frac{f (t_n)}{\alpha} \right ) ^ {1/2} \right ) \\ 
+& \leq \frac{1}{\sqrt{2\pi}} \left ( \frac{f(t_n)}{\alpha} \right ) ^ {-1/2} \exp \left ( - f (t_n) / 2 \alpha \right ).
+\end{align}
+If $f(n) = 2 \alpha^2 \log \log (n)$ then $f(t_n) = \log (n) + \log \log (\alpha)$ and therefor $\exp \left ( - f (t_n) / 2 \alpha \right ) \leq C_\alpha n^{-\alpha}$ for some $C_\alpha > 0$ depending only on $\alpha$. Hence
+\begin{equation}
+\sum_{n=1}^\infty \mathbb{P} \left ( \sup_{s \in [t_n, t_{n+1}]} B_s > \left ( t_n f (t_n) \right ) \right ) < \infty. 
+\end{equation}
+Since $t \mapsto \left ( t f(t) \right )^{1/2}$ is increasing and $\alpha$ is arbitrary we obtain that $\mathbb{P}$-almost surely
+\begin{equation}
+\limsup_{n \rightarrow \infty} B_n / \sqrt{2 \log \log (n)} \leq 1. 
+\end{equation} 
+To prove a weak inequality in the other direction let $t_n$ be defined as before but this time take $\alpha$ to be large in order to get independence. We put $\beta = t_{n+1} / (t_{n+1} - t_n ) = \alpha / (\alpha - 1)$ and look at the exceedance probability of the increments: 
+\begin{equation}
+\mathbb{P} \left ( B_{t_{n+1}} - B_{t_n} > \left ( t_{n+1} f (t_{n+1}) \right ) ^ {1/2} \right ) = \mathbb{P} \left ( B_1 > \left ( \beta f (t_{n+1}) \right ) ^ {1/2} \right ). 
+\label{equation: increments exc}
+\end{equation}
+Again using Lemma \ref{lemma: gauss tail bound} (\ref{equation: increments exc}) will be no smaller than $\frac{1}{2\sqrt{2\pi}} \left ( \beta f (t_{n+1}) \right ) ^ {-1/2} \exp \left ( - \beta f \left ( t_{n+1} \right ) / 2 \right )$. Therefore, for $n$ sufficiently large and putting $f(n) = (2/\beta^2) \log \log (n)$ we obtain that $\exp \left ( - \beta f \left ( t_{n+1} \right ) / 2 \right )$ is no smaller than $C_\alpha n^{-1/\beta}$. Therefore: 
+\begin{equation}
+\sum_{n=0}^\infty \mathbb{P} \left ( B_{t_{n+1}} - B_{t_n} > \left ( t_{n+1} f (t_{n+1}) \right ) ^ {1/2} \right ) = \infty. 
+\end{equation}
+Since the events in question are independent we obtain by Borel-Cantelli that infinity often
+\begin{equation}
+B_{t_{n+1}} - B_{t_n} > \sqrt{\left ( 2 / \beta^2 \right ) t_{n+1} \log \log (t_{n+1})}. 
+\end{equation}
+Plugging in the definition of $\beta$, and using the facts that $t_n = t_{n+1} / \alpha$ along with the fact that $\log \log (n)$ is monotone increasing we obtain that 
+\begin{equation}
+\limsup_{n \rightarrow \infty} B_{t_{n+1}} / \sqrt{2 t_{n+1} \log \log (t_{n+1})} \geq \frac{\alpha-1}{\alpha} - \frac{1}{\sqrt{\alpha}}. 
+\end{equation}
+Finally, letting $\alpha \rightarrow \infty$ proves the result. 
 \end{proof}
 
-\newpage 
+\subsection{Laws of iterated logarithm for discrete random walks} \label{section: laws of iterated logarithm for discrete random walks}
 
-\begin{thebibliography}{99}
-	
-	\bibitem[Pollard, 2001]{PollardUGMTP}
-    Pollard, D. (2001).
-	\newblock {\em A {U}ser's {G}uide to {M}easure {T}heoretic {P}robability}.
-	\newblock Cambridge University Press.
-	
-\end{thebibliography}
+We now present a law of iterated logarithms for discrete random walks with finite second moment. The main theoretical device will be the embedding of random walks from independent random variables with bounded moments into Wiener processes. Such a result is given below. 
 
+\begin{lemma}
+Let $X_1, X_2, \dots$ be independently distributed with mean zero, variance one, and common marginal distribution $F$. Putting $S_n = X_1 + \dots + X_n$ for $n \geq 1$ there is a sequence of stopping times $T_0, T_1, \dots$ with $T_0 = $ such that $S_n \stackrel{d}{=} B_{T_n}$ and moreover the increments $T_n - T_{n-1}$ are independently distributed. 
+\label{lemma: random walk coupling}
+\end{lemma}
+
+The lemma is not hard to prove, and its proof can be found for for example in Theorem 8.1.2 of \cite{durrett2019probability}. However, we defer the proof to Chapter 10 where couplings of empirical processes and Wiener process will be discussed in detail. Combining Theorem \ref{theorem: BM LIL} with Lemma \ref{lemma: random walk coupling} readily yields the following result. 
+
+\begin{theorem}
+If $X_1, X_2, \dots$ are independently distributed with mean zero, variance one, and common distribution function $F$ then $\mathbb{P}$-almost surely $\limsup \limits_{n \rightarrow \infty} S_n / \sqrt{2 n \log \log (n)} = 1$. 
+\label{theorem: LIL random walk}
+\end{theorem}
+
+Another approach to proving the theorem is given in Chapter 11 of \cite{pollard2002user}
+
+\subsection{Distributional convergence}
+
+In can be of interest to understand the distribution of the maximal fluctuations in a standardised random walk. The following result can be found for example in \cite{kabluchko2007extreme}. 
+
+\begin{theorem}
+Let $\left (B_t \right )_{t \geq 0}$ be a Wiener process and for $n > 1$ put $M_n = \sup_{s \in [0,n]} s^{-1/2} B_s$. Then for every fixed $z \in \mathbb{R}$ it holds that $\mathbb{P} \left ( M_n \leq a_n + z b_n \right ) \rightarrow \exp (e^{-z})$ as $n \rightarrow \infty$, where in particular the normalizing constants are given by
+\begin{align}
+& a_n = \sqrt{2 \log \log (n)} + \frac{1/2 \log \log \log (n) - \log \left ( 2 \sqrt{\pi} \right )}{\sqrt{2 \log \log (n)}} \\ 
+& b_n = \frac{1}{\sqrt{2 \log \log (n)}}.
+\end{align}
+\label{theorem: distributional LIL for Wiener process}
+\end{theorem}
+
+Using the same approach as in Section \ref{section: laws of iterated logarithm for discrete random walks} \cite{darling1956limit} used the above theorem to prove the following result. 
+
+\begin{theorem}
+Let $X_1, X_2, \dots$ be independently distributed with marginal $\mathcal{N} (0,1)$ distribution, put $S_n = X_1 + \dots + X_n$, and put $M_n = \max_{s \in \left \{ 1, \dots, n \right \}} s^{-1/2} S_s$. Then for any fixed $z \in \mathbb{R}$ it holds that $\mathbb{P} \left ( M_n \leq a_n + z b_n \right ) \rightarrow \exp (e^{-z})$ as $n \rightarrow \infty$, where the normalizing constants are the same as those given in Theorem \ref{theorem: distributional LIL for Wiener process}. 
+\label{theorem: distributional LIL for random walk}
+\end{theorem}
+
+\subsection{Non-asymptotic laws of iterated logarithm}
+
+In applications it often useful to have a finite sample counterpart to Theorems \ref{theorem: BM LIL} and \ref{theorem: LIL random walk}. To this end \cite{balsubramani2014sharp} proves the following result. 
+
+\begin{theorem}
+Let $X_1, X_2, \dots$ be mutually independent Rademacher random variables and put $S_n = X_1 + \dots + X_n$. There is an absolute constant $C$, where it suffices to take $C = 137$, such that for any $\delta \in (0,1)$ and any $n > C \log (4 / \delta)$ it holds with probability at least $1 - \delta$ that
+\begin{equation}
+\left | S_n \right | \leq \sqrt{3n \left( 2 \log \log \left ( \frac{5}{2} n \right ) + \log \left ( \frac{2}{\delta} \right ) \right )} \vee 1. 
+\label{eqation: finite sample LIL}
+\end{equation}
+\label{theorem: finite sample LIL}
+\end{theorem}
+
+The leading constant $\sqrt{6}$ in (\ref{eqation: finite sample LIL}) does not seem optimal, as in fact Theorem \ref{theorem: BM LIL} suggests the constant should be $\sqrt{2}$. Nevertheless, the result captures the first order asymptotics of the maximum fluctuations in the random walk, and makes explicit the trade off between $\delta$ and $n$. \cite{balsubramani2014sharp} extend the result to martingales with uniformly bounded increments. Using the strong approximation results in \cite{komlos1975approximation} it should be possible to extend Theorem \ref{theorem: finite sample LIL} to other discrete random walks not necessarily having bounded increments. 
+
+\newpage
+
+\bibliographystyle{ksfh_nat}
+\bibliography{../bibliography/ref}
 
 \end{document}
