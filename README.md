@@ -1,3 +1,3 @@
-# Statistics-607b-LSE-2024
+# LSE-607b-handouts
 
 Handouts prepared by speakers. 
